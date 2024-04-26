@@ -1,0 +1,22 @@
+pipline{
+    agent any
+
+    stages{
+        stage('Build') { 
+        steps{
+            bat 'python -m venv venv'
+            bat 'venv\\Scripts\\activate.bat'
+            bat 'pip install -r requirements.txt'
+        }
+      }
+
+    stage('Deploy'){
+        steps{
+            bat 'python manage.py collectstatic --noinput'
+            bat 'python manage.py migrate --noinput'
+            bat 'python manage.py runserver'
+        }
+     }
+
+  }
+}
